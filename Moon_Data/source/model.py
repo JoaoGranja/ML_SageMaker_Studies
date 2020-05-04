@@ -14,6 +14,13 @@ class SimpleNet(nn.Module):
          '''
         super(SimpleNet, self).__init__()
         
+        self.fc1 = nn.Linear(input_dim, hidden_dim)
+        
+        self.dropout = nn.Dropout(0.2)
+        
+        self.fc2 = nn.Linear(hidden_dim, output_dim)
+        
+        self.sigm = nn.Sigmoid()
         # define all layers, here
         
     
@@ -24,5 +31,13 @@ class SimpleNet(nn.Module):
            :return: A single, sigmoid activated value
          '''
         # your code, here
-        
+        # add hidden layer, with relu activation function
+        x = F.relu(self.fc1(x))
+        # add dropout layer
+        x = self.dropout(x)
+        # add hidden layer, with relu activation function
+        x = self.fc2(x)
+        # add output layer
+        x = self.sigm(x)
+              
         return x
